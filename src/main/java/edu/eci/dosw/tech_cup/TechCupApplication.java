@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Lab 08 - Kevyn, Diego, Juliana, Juan
  */
 @SpringBootApplication
-public class Lab08Application {
+public class TechCupApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Lab08Application.class, args);
+        SpringApplication.run(TechCupApplication.class, args);
     }
 
 }
