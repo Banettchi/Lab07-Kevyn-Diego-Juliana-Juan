@@ -1,4 +1,4 @@
-package edu.eci.dosw.lab08;
+package edu.eci.dosw.tech_cup;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
