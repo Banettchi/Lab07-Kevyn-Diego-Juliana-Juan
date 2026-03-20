@@ -6,25 +6,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class TournamentService {
 
     private final List<Tournament> tournaments = new ArrayList<>();
-    private final AtomicLong idGenerator = new AtomicLong(1);
+    private Long nextId = 1L;
 
     public TournamentService() {
         Tournament t1 = new Tournament();
-        t1.setId(idGenerator.getAndIncrement());
+        t1.setId(nextId++);
         t1.setName("TechCup 2025");
         t1.setTeamLimit(8);
         t1.setTeamCost(50000);
         t1.setStatus(TournamentStatus.DRAFT);
 
         Tournament t2 = new Tournament();
-        t2.setId(idGenerator.getAndIncrement());
+        t2.setId(nextId++);
         t2.setName("TechCup Verano");
         t2.setTeamLimit(16);
         t2.setTeamCost(80000);
@@ -38,37 +36,48 @@ public class TournamentService {
         return new ArrayList<>(tournaments);
     }
 
-    public Optional<Tournament> findById(Long id) {
-        return tournaments.stream()
-                .filter(t -> t.getId().equals(id))
-                .findFirst();
+    public Tournament findById(Long id) {
+        for (Tournament t : tournaments) {
+            if (t.getId().equals(id)) {
+                return t;
+            }
+        }
+        return null;
     }
 
     public Tournament create(Tournament tournament) {
-        tournament.setId(idGenerator.getAndIncrement());
+        tournament.setId(nextId++);
         tournament.setStatus(TournamentStatus.DRAFT);
         tournaments.add(tournament);
         return tournament;
     }
 
-    public Optional<Tournament> update(Long id, Tournament updated) {
+    public Tournament update(Long id, Tournament updated) {
         for (int i = 0; i < tournaments.size(); i++) {
             Tournament current = tournaments.get(i);
             if (current.getId().equals(id)) {
                 if (current.getStatus() == TournamentStatus.FINISHED) {
-                    return Optional.empty();
+                    return null;
                 }
                 updated.setId(id);
                 updated.setStatus(current.getStatus());
                 tournaments.set(i, updated);
-                return Optional.of(updated);
+                return updated;
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     public boolean delete(Long id) {
-        return tournaments.removeIf(t ->
-                t.getId().equals(id) && t.getStatus() == TournamentStatus.DRAFT);
+        for (int i = 0; i < tournaments.size(); i++) {
+            if (tournaments.get(i).getId().equals(id)) {
+                if (tournaments.get(i).getStatus() == TournamentStatus.DRAFT) {
+                    tournaments.remove(i);
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
     }
 }

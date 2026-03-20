@@ -38,10 +38,10 @@ class UserServiceTest {
         u.setPassword("pass123");
         User created = userService.create(u);
 
-        var result = userService.deactivate(created.getId());
+        User result = userService.deactivate(created.getId());
 
-        assertTrue(result.isPresent());
-        assertFalse(result.get().isAvailable());
+        assertNotNull(result);
+        assertFalse(result.isAvailable());
     }
 
     @Test
@@ -52,15 +52,15 @@ class UserServiceTest {
         u.setPassword("pass123");
         User created = userService.create(u);
 
-        var result = userService.assignRole(created.getId(), Role.ADMIN);
+        User result = userService.assignRole(created.getId(), Role.ADMIN);
 
-        assertTrue(result.isPresent());
-        assertEquals(Role.ADMIN, result.get().getRole());
+        assertNotNull(result);
+        assertEquals(Role.ADMIN, result.getRole());
     }
 
     @Test
-    void debeRetornarVacioSiUsuarioNoExiste() {
-        var result = userService.findById(999L);
-        assertTrue(result.isEmpty());
+    void debeRetornarNullSiUsuarioNoExiste() {
+        User result = userService.findById(999L);
+        assertNull(result);
     }
 }

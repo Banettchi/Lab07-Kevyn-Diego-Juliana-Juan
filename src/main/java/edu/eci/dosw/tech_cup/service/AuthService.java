@@ -32,11 +32,12 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        return users.stream()
-                .filter(u -> u.getEmail().equals(request.getEmail())
-                        && u.getPassword().equals(request.getPassword()))
-                .findFirst()
-                .map(u -> new AuthResponse(true, "Login exitoso", u.getRole().name()))
-                .orElse(new AuthResponse(false, "Credenciales inválidas", null));
+        for (User u : users) {
+            if (u.getEmail().equals(request.getEmail())
+                    && u.getPassword().equals(request.getPassword())) {
+                return new AuthResponse(true, "Login exitoso", u.getRole().name());
+            }
+        }
+        return new AuthResponse(false, "Credenciales inválidas", null);
     }
 }
