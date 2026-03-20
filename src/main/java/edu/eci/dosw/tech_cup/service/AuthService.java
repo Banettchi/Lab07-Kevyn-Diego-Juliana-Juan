@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class AuthService {
+    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
 
     private final List<User> users = new ArrayList<>();
 
@@ -32,12 +36,15 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
+        log.debug("Intento de login para: {}", request.getEmail());
         for (User u : users) {
             if (u.getEmail().equals(request.getEmail())
                     && u.getPassword().equals(request.getPassword())) {
+                log.info("Login exitoso para: {}", request.getEmail());
                 return new AuthResponse(true, "Login exitoso", u.getRole().name());
             }
         }
+        log.warn("Login fallido para: {}", request.getEmail());
         return new AuthResponse(false, "Credenciales inválidas", null);
     }
 }
