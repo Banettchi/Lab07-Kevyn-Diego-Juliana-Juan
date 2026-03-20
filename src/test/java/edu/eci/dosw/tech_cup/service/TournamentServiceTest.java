@@ -4,7 +4,6 @@ import edu.eci.dosw.tech_cup.model.Tournament;
 import edu.eci.dosw.tech_cup.model.enums.TournamentStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TournamentServiceTest {
@@ -40,9 +39,9 @@ class TournamentServiceTest {
 
         Tournament updated = new Tournament();
         updated.setName("Nombre Nuevo");
-        Optional<Tournament> result = tournamentService.update(created.getId(), updated);
+        Tournament result = tournamentService.update(created.getId(), updated);
 
-        assertTrue(result.isEmpty());
+        assertNull(result);
     }
 
     @Test

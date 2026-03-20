@@ -6,18 +6,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class UserService {
 
     private final List<User> users = new ArrayList<>();
-    private final AtomicLong idGenerator = new AtomicLong(1);
+    private Long nextId = 1L;
 
     public UserService() {
         User u1 = new User();
-        u1.setId(idGenerator.getAndIncrement());
+        u1.setId(nextId++);
         u1.setName("Jugador Demo");
         u1.setEmail("jugador@techcup.com");
         u1.setPassword("jugador123");
@@ -25,7 +23,7 @@ public class UserService {
         u1.setAvailable(true);
 
         User u2 = new User();
-        u2.setId(idGenerator.getAndIncrement());
+        u2.setId(nextId++);
         u2.setName("Admin TechCup");
         u2.setEmail("admin@techcup.com");
         u2.setPassword("admin123");
@@ -40,49 +38,52 @@ public class UserService {
         return new ArrayList<>(users);
     }
 
-    public Optional<User> findById(Long id) {
-        return users.stream()
-                .filter(u -> u.getId().equals(id))
-                .findFirst();
+    public User findById(Long id) {
+        for (User u : users) {
+            if (u.getId().equals(id)) {
+                return u;
+            }
+        }
+        return null;
     }
 
     public User create(User user) {
-        user.setId(idGenerator.getAndIncrement());
+        user.setId(nextId++);
         user.setRole(Role.PLAYER);
         user.setAvailable(true);
         users.add(user);
         return user;
     }
 
-    public Optional<User> update(Long id, User updated) {
+    public User update(Long id, User updated) {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getId().equals(id)) {
                 updated.setId(id);
                 updated.setRole(users.get(i).getRole());
                 users.set(i, updated);
-                return Optional.of(updated);
+                return updated;
             }
         }
-        return Optional.empty();
+        return null;
     }
 
-    public Optional<User> assignRole(Long id, Role role) {
-        return users.stream()
-                .filter(u -> u.getId().equals(id))
-                .findFirst()
-                .map(u -> {
-                    u.setRole(role);
-                    return u;
-                });
+    public User assignRole(Long id, Role role) {
+        for (User u : users) {
+            if (u.getId().equals(id)) {
+                u.setRole(role);
+                return u;
+            }
+        }
+        return null;
     }
 
-    public Optional<User> deactivate(Long id) {
-        return users.stream()
-                .filter(u -> u.getId().equals(id))
-                .findFirst()
-                .map(u -> {
-                    u.setAvailable(false);
-                    return u;
-                });
+    public User deactivate(Long id) {
+        for (User u : users) {
+            if (u.getId().equals(id)) {
+                u.setAvailable(false);
+                return u;
+            }
+        }
+        return null;
     }
 }
