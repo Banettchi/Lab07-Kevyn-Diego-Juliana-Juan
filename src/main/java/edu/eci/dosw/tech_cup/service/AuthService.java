@@ -1,9 +1,9 @@
-package edu.eci.dosw.lab08.service;
+package edu.eci.dosw.tech_cup.service;
 
-import edu.eci.dosw.lab08.dto.auth.AuthResponse;
-import edu.eci.dosw.lab08.dto.auth.LoginRequest;
-import edu.eci.dosw.lab08.model.User;
-import edu.eci.dosw.lab08.model.enums.Role;
+import edu.eci.dosw.tech_cup.dto.auth.AuthResponse;
+import edu.eci.dosw.tech_cup.dto.auth.LoginRequest;
+import edu.eci.dosw.tech_cup.model.User;
+import edu.eci.dosw.tech_cup.model.enums.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

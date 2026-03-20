@@ -1,4 +1,4 @@
-package edu.eci.dosw.lab08.model.enums;
+package edu.eci.dosw.tech_cup.model.enums;
 
 public enum ParticipantType {
     STUDENT,

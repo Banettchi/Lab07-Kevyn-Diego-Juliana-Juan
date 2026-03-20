@@ -1,6 +1,6 @@
-package edu.eci.dosw.lab08.model;
+package edu.eci.dosw.tech_cup.model;
 
-import edu.eci.dosw.lab08.model.enums.PaymentStatus;
+import edu.eci.dosw.tech_cup.model.enums.PaymentStatus;
 
 import java.time.LocalDate;
 

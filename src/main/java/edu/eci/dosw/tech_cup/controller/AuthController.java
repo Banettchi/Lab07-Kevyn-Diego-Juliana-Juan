@@ -1,7 +1,7 @@
-package edu.eci.dosw.lab08.controller;
-import edu.eci.dosw.lab08.dto.auth.AuthResponse;
-import edu.eci.dosw.lab08.dto.auth.LoginRequest;
-import edu.eci.dosw.lab08.service.AuthService;
+package edu.eci.dosw.tech_cup.controller;
+import edu.eci.dosw.tech_cup.dto.auth.AuthResponse;
+import edu.eci.dosw.tech_cup.dto.auth.LoginRequest;
+import edu.eci.dosw.tech_cup.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
