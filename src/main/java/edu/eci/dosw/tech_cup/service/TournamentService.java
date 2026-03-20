@@ -1,8 +1,7 @@
-package edu.eci.dosw.lab08.service;
+package edu.eci.dosw.tech_cup.service;
 
-
-import edu.eci.dosw.lab08.model.Tournament;
-import edu.eci.dosw.lab08.model.enums.TournamentStatus;
+import edu.eci.dosw.tech_cup.model.Tournament;
+import edu.eci.dosw.tech_cup.model.enums.TournamentStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class TournamentService {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     public TournamentService() {
-        // Torneos dummy para probar
         Tournament t1 = new Tournament();
         t1.setId(idGenerator.getAndIncrement());
         t1.setName("TechCup 2025");
@@ -47,7 +45,6 @@ public class TournamentService {
     }
 
     public Tournament create(Tournament tournament) {
-        // Regla: siempre se crea en estado DRAFT
         tournament.setId(idGenerator.getAndIncrement());
         tournament.setStatus(TournamentStatus.DRAFT);
         tournaments.add(tournament);
@@ -58,7 +55,6 @@ public class TournamentService {
         for (int i = 0; i < tournaments.size(); i++) {
             Tournament current = tournaments.get(i);
             if (current.getId().equals(id)) {
-                // Regla: no se puede modificar si está FINISHED
                 if (current.getStatus() == TournamentStatus.FINISHED) {
                     return Optional.empty();
                 }
@@ -72,12 +68,7 @@ public class TournamentService {
     }
 
     public boolean delete(Long id) {
-        return tournaments.removeIf(t -> {
-            // Regla: solo se puede eliminar si está en DRAFT
-            if (t.getId().equals(id) && t.getStatus() == TournamentStatus.DRAFT) {
-                return true;
-            }
-            return false;
-        });
+        return tournaments.removeIf(t ->
+                t.getId().equals(id) && t.getStatus() == TournamentStatus.DRAFT);
     }
 }

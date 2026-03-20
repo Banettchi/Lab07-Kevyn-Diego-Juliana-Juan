@@ -1,7 +1,7 @@
-package edu.eci.dosw.lab08.service;
+package edu.eci.dosw.tech_cup.service;
 
-import edu.eci.dosw.lab08.model.User;
-import edu.eci.dosw.lab08.model.enums.Role;
+import edu.eci.dosw.tech_cup.model.User;
+import edu.eci.dosw.tech_cup.model.enums.Role;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ public class UserService {
     private final AtomicLong idGenerator = new AtomicLong(1);
 
     public UserService() {
-        // Usuarios dummy para probar
         User u1 = new User();
         u1.setId(idGenerator.getAndIncrement());
         u1.setName("Jugador Demo");
@@ -48,7 +47,6 @@ public class UserService {
     }
 
     public User create(User user) {
-        // Regla: siempre se crea con rol PLAYER
         user.setId(idGenerator.getAndIncrement());
         user.setRole(Role.PLAYER);
         user.setAvailable(true);
@@ -60,7 +58,6 @@ public class UserService {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getId().equals(id)) {
                 updated.setId(id);
-                // Conserva el rol original — no se cambia aquí
                 updated.setRole(users.get(i).getRole());
                 users.set(i, updated);
                 return Optional.of(updated);
@@ -70,7 +67,6 @@ public class UserService {
     }
 
     public Optional<User> assignRole(Long id, Role role) {
-        // Regla: solo el ADMIN puede llamar esto — la validación va en el controller
         return users.stream()
                 .filter(u -> u.getId().equals(id))
                 .findFirst()
@@ -81,7 +77,6 @@ public class UserService {
     }
 
     public Optional<User> deactivate(Long id) {
-        // Regla: no se elimina, solo se inactiva
         return users.stream()
                 .filter(u -> u.getId().equals(id))
                 .findFirst()

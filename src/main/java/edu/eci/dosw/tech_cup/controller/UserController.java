@@ -1,8 +1,8 @@
-package edu.eci.dosw.lab08.controller;
+package edu.eci.dosw.tech_cup.controller;
 
-import edu.eci.dosw.lab08.model.User;
-import edu.eci.dosw.lab08.model.enums.Role;
-import edu.eci.dosw.lab08.service.UserService;
+import edu.eci.dosw.tech_cup.model.User;
+import edu.eci.dosw.tech_cup.model.enums.Role;
+import edu.eci.dosw.tech_cup.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    // GET /api/users
     @GetMapping
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    // GET /api/users/{id}
     @GetMapping("/{id}")
     public ResponseEntity<User> getById(@PathVariable Long id) {
         return userService.findById(id)
@@ -33,14 +31,12 @@ public class UserController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // POST /api/users
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user) {
         User created = userService.create(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    // PUT /api/users/{id}
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user) {
         return userService.update(id, user)
@@ -48,7 +44,6 @@ public class UserController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // PUT /api/users/{id}/role  — solo ADMIN
     @PutMapping("/{id}/role")
     public ResponseEntity<User> assignRole(@PathVariable Long id,
                                            @RequestParam Role role,
@@ -61,7 +56,6 @@ public class UserController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    // PUT /api/users/{id}/deactivate  — inactivar en lugar de DELETE
     @PutMapping("/{id}/deactivate")
     public ResponseEntity<User> deactivate(@PathVariable Long id) {
         return userService.deactivate(id)

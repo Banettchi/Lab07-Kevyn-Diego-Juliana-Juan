@@ -1,4 +1,4 @@
-package edu.eci.dosw.lab08.dto.auth;
+package edu.eci.dosw.tech_cup.dto.auth;
 
 public class LoginRequest {
 

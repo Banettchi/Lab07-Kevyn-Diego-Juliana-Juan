@@ -1,6 +1,6 @@
-package edu.eci.dosw.lab08.model;
+package edu.eci.dosw.tech_cup.model;
 
-import edu.eci.dosw.lab08.model.enums.TournamentStatus;
+import edu.eci.dosw.tech_cup.model.enums.TournamentStatus;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

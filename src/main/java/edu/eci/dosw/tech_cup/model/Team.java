@@ -1,7 +1,7 @@
-package edu.eci.dosw.lab08.model;
+package edu.eci.dosw.tech_cup.model;
 
-import edu.eci.dosw.lab08.model.enums.Role;
-import edu.eci.dosw.lab08.model.enums.TeamStatus;
+import edu.eci.dosw.tech_cup.model.enums.Role;
+import edu.eci.dosw.tech_cup.model.enums.TeamStatus;
 
 import java.util.ArrayList;
 import java.util.List;
