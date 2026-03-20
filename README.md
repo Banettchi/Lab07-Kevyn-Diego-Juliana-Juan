@@ -60,3 +60,76 @@ Spring Framework. (2024). *Spring Boot Reference Documentation*. https://docs.sp
 Baeldung. (2024). *REST with Spring Tutorial*. https://www.baeldung.com/rest-with-spring-series
 
 VMware. (2024). *Building a RESTful Web Service*. https://spring.io/guides/gs/rest-service/
+
+## Parte 2 - Diagrama de clases a implementación
+
+### Clases identificadas para el primer ciclo
+Se identificaron las siguientes clases para cubrir los requerimientos de Autenticación, Usuarios (CRUD) y Torneo (CRUD):
+
+**Autenticación:**
+- `AuthController` - Endpoint POST /api/auth/login
+- `AuthService` - Lógica de autenticación por correo y contraseña
+- `LoginRequest` - DTO con correo y contraseña
+- `AuthResponse` - DTO con resultado del login
+
+**Usuarios:**
+- `UserController` - Endpoints CRUD de usuarios
+- `UserService` - Lógica de negocio de usuarios
+- `User` - Modelo de usuario
+
+**Torneo:**
+- `TournamentController` - Endpoints CRUD de torneos
+- `TournamentService` - Lógica de negocio de torneos
+- `Tournament` - Modelo de torneo
+
+### Pruebas TDD
+Se crearon pruebas unitarias para los 3 requerimientos:
+- `AuthServiceTest` - Pruebas de autenticación
+- `UserServiceTest` - Pruebas de usuarios
+- `TournamentServiceTest` - Pruebas de torneos
+
+## Parte 3 - API primer ciclo
+
+### Endpoints implementados
+
+**Autenticación:**
+- `POST /api/auth/login` - Autentica por correo y contraseña
+
+**Usuarios:**
+- `GET /api/users` - Obtener todos los usuarios
+- `GET /api/users/{id}` - Obtener usuario por ID
+- `POST /api/users` - Crear usuario (rol PLAYER por defecto)
+- `PUT /api/users/{id}` - Actualizar usuario
+- `PUT /api/users/{id}/role` - Asignar rol (solo ADMIN)
+- `PUT /api/users/{id}/deactivate` - Inactivar usuario
+
+**Torneos:**
+- `GET /api/tournaments` - Obtener todos los torneos
+- `GET /api/tournaments/{id}` - Obtener torneo por ID
+- `POST /api/tournaments` - Crear torneo (estado DRAFT por defecto)
+- `PUT /api/tournaments/{id}` - Actualizar torneo (no aplica si está FINISHED)
+- `DELETE /api/tournaments/{id}` - Eliminar torneo (solo si está en DRAFT)
+
+## Parte 4 - Swagger
+
+### Documentación de la API
+La API fue documentada usando Swagger UI con SpringDoc OpenAPI. Se agregó la dependencia `springdoc-openapi-starter-webmvc-ui` y se configuró la clase `SwaggerConfig` para personalizar el título y versión. Cada controlador fue anotado con `@Tag` y `@Operation` para describir los endpoints.
+
+Para acceder a la documentación: `http://localhost:8080/swagger-ui.html`
+
+![Swagger Torneos](src/main/resources/docs/images/Captura2.png)
+![Swagger Usuarios y Autenticación](src/main/resources/docs/images/Captura3.png)
+![Swagger endpoint por ID](src/main/resources/docs/images/capture5.png)
+
+## Parte 5 - Logger
+
+### Registro de acciones con SLF4J
+Se implementó el registro de acciones y errores en los servicios usando SLF4J. Se agregaron logs de tipo `debug`, `info` y `warn` en los métodos de `AuthService`, `UserService` y `TournamentService`.
+
+El archivo de logs se configura en `application.properties`:
+```properties
+logging.file.name=logs/tech-cup.log
+```
+
+![Logger en ejecución](src/main/resources/docs/images/capture6.png)
+![Estructura del proyecto con logs](src/main/resources/docs/images/Captura1.png)
